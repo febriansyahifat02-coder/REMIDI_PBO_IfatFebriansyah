@@ -13,17 +13,20 @@ class ReservasiEvent extends Reservasi {
         $this->biayaTransportasiTim = $biayaTransportasiTim;
     }
 
-    // Implementasi metode abstrak dari kelas induk
+    // [Tahap 5] Implementasi Overriding Polimorfisme
     public function hitungTotalBiaya() {
-        // Logika: Tarif dasar x durasi + biaya transportasi tim
-        return ($this->durasiJam * $this->tarifDasarPerJam) + $this->biayaTransportasiTim;
+        $totalDurasi = $this->durasiJam * $this->tarifDasarPerJam;
+        
+        // Ditambah biaya transportasi tim
+        return $totalDurasi + $this->biayaTransportasiTim;
     }
 
+    // [Tahap 3 & 4] Menampilkan spesifikasi paket
     public function tampilkanSpesifkasiPaket() {
         return "Paket Event [Lokasi: {$this->namaLokasiLuar}, Transportasi: Rp" . number_format($this->biayaTransportasiTim, 0, ',', '.') . "]";
     }
 
-    // Metode yang berisi query SELECT-WHERE spesifik paket event
+    // [Tahap 4] Metode berisi query SELECT-WHERE
     public static function dapatkanEventBerdasarkanId($conn, $id) {
         $sql = "SELECT id_reservasi, nama_pelanggan, tanggal_booking, durasi_jam, tarif_dasar_per_jam, nama_lokasi_luar, biaya_transportasi_tim 
                 FROM tabel_reservasi 
@@ -48,3 +51,4 @@ class ReservasiEvent extends Reservasi {
         return null;
     }
 }
+?>

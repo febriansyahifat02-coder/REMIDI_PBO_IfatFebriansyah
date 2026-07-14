@@ -13,18 +13,20 @@ class ReservasiReguler extends Reservasi {
         $this->cetakFotoLembar = $cetakFotoLembar;
     }
 
-    // Implementasi metode abstrak dari kelas induk
+    // [Tahap 5] Implementasi Overriding Polimorfisme
     public function hitungTotalBiaya() {
-        // Logika: Tarif dasar x durasi + biaya cetak (misal Rp10.000 per lembar)
-        $biayaCetak = $this->cetakFotoLembar * 10000;
-        return ($this->durasiJam * $this->tarifDasarPerJam) + $biayaCetak;
+        $totalDurasi = $this->durasiJam * $this->tarifDasarPerJam;
+        $biayaTambahanFlat = 50000; // Biaya sewa kamera/kebersihan flat
+        
+        return $totalDurasi + $biayaTambahanFlat;
     }
 
+    // [Tahap 3 & 4] Menampilkan spesifikasi paket
     public function tampilkanSpesifkasiPaket() {
         return "Paket Reguler [Background: {$this->tipeBackground}, Cetak Foto: {$this->cetakFotoLembar} Lembar]";
     }
 
-    // Metode yang berisi query SELECT-WHERE spesifik paket reguler
+    // [Tahap 4] Metode berisi query SELECT-WHERE
     public static function dapatkanRegulerBerdasarkanId($conn, $id) {
         $sql = "SELECT id_reservasi, nama_pelanggan, tanggal_booking, durasi_jam, tarif_dasar_per_jam, tipe_background, cetak_foto_lembar 
                 FROM tabel_reservasi 
@@ -49,3 +51,4 @@ class ReservasiReguler extends Reservasi {
         return null;
     }
 }
+?>

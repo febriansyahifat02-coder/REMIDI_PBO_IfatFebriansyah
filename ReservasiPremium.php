@@ -13,20 +13,21 @@ class ReservasiPremium extends Reservasi {
         $this->layananMakeup = $layananMakeup;
     }
 
-    // Implementasi metode abstrak dari kelas induk
+    // [Tahap 5] Implementasi Overriding Polimorfisme
     public function hitungTotalBiaya() {
-        // Logika: Tarif dasar x durasi + biaya tambahan talent (misal Rp50.000/orang) + biaya makeup (Rp150.000 jika dipilih)
-        $biayaTalent = $this->kuotaTalentOrang * 50000;
-        $biayaMakeup = $this->layananMakeup ? 150000 : 0;
-        return ($this->durasiJam * $this->tarifDasarPerJam) + $biayaTalent + $biayaMakeup;
+        $totalDurasi = $this->durasiJam * $this->tarifDasarPerJam;
+        
+        // Surcharge layanan 20% (dikali 1.20)
+        return $totalDurasi * 1.20;
     }
 
+    // [Tahap 3 & 4] Menampilkan spesifikasi paket
     public function tampilkanSpesifkasiPaket() {
         $statusMakeup = $this->layananMakeup ? "Termasuk" : "Tidak Termasuk";
         return "Paket Premium [Kuota Talent: {$this->kuotaTalentOrang} Orang, Layanan Makeup: {$statusMakeup}]";
     }
 
-    // Metode yang berisi query SELECT-WHERE spesifik paket premium
+    // [Tahap 4] Metode berisi query SELECT-WHERE
     public static function dapatkanPremiumBerdasarkanId($conn, $id) {
         $sql = "SELECT id_reservasi, nama_pelanggan, tanggal_booking, durasi_jam, tarif_dasar_per_jam, kuota_talent_orang, layanan_makeup 
                 FROM tabel_reservasi 
@@ -51,3 +52,4 @@ class ReservasiPremium extends Reservasi {
         return null;
     }
 }
+?>
